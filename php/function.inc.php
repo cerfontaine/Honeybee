@@ -7,11 +7,7 @@ require_once("db_projet.inc.php");
 require_once("db_commentaire.inc.php");
 require_once("db_participation.inc.php");
 require_once("db_news.inc.php");
-require_once('../PHPMailer/src/PHPMailer.php');
-require_once('../PHPMailer/src/Exception.php');
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 const REP_UPLOAD = "uploads/";
 
 function MailIsValid($email, &$message) {

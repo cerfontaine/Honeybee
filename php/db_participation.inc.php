@@ -63,8 +63,8 @@ class ParticipationRepository
         $bdd = null;
         try {
             $bdd = DBLink::connect2db(MYDB, $message);
-            $stmt = $bdd->prepare("SELECT SUM(montant) AS total FROM " . self::TABLE_NAME . " WHERE id_projet ='$id' ");
-            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            $stmt = $bdd->prepare("SELECT SUM(montant) AS total FROM " . self::TABLE_NAME . " WHERE id_projet = :id_participation ");
+            $stmt->bindValue(':id_participation', $id);
             if ($stmt->execute()){
                 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Participation\Participation');
                 $result = $stmt->fetch();
@@ -88,8 +88,8 @@ class ParticipationRepository
         $bdd = null;
         try {
             $bdd = DBLink::connect2db(MYDB, $message);
-            $stmt = $bdd->prepare("SELECT COUNT(id_membre) AS counter FROM " . self::TABLE_NAME . " WHERE id_projet ='$id' ");
-            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            $stmt = $bdd->prepare("SELECT COUNT(id_membre) AS counter FROM " . self::TABLE_NAME . " WHERE id_projet = :id_participation ");
+            $stmt->bindValue(':id_participation', $id);
             if ($stmt->execute()){
                 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Participation\Participation');
                 $result = $stmt->fetch();

@@ -181,8 +181,8 @@ class ProjetRepository
         $bdd = null;
         try {
             $bdd = DBLink::connect2db(MYDB, $message);
-            $stmt = $bdd->prepare("SELECT intitule FROM " . self::TABLE_NAME . " WHERE id_projet ='$id' ");
-            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            $stmt = $bdd->prepare("SELECT intitule FROM " . self::TABLE_NAME . " WHERE id_projet = :id_projet ");
+            $stmt->bindValue(':id_projet', $id);
             if ($stmt->execute()){
                 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Projet\Projet');
                 $result = $stmt->fetch();
@@ -204,8 +204,8 @@ class ProjetRepository
         $bdd = null;
         try {
             $bdd = DBLink::connect2db(MYDB, $message);
-            $stmt = $bdd->prepare("SELECT montant_min FROM " . self::TABLE_NAME . " WHERE id_projet ='$id' ");
-            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            $stmt = $bdd->prepare("SELECT montant_min FROM " . self::TABLE_NAME . " WHERE id_projet = :id_projet ");
+            $stmt->bindValue(':id_projet', $id);
             if ($stmt->execute()){
                 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Projet\Projet');
                 $result = $stmt->fetch();

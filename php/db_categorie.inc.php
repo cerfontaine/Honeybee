@@ -75,8 +75,8 @@ class CategorieRepository
         $bdd = null;
         try {
             $bdd = DBLink::connect2db(MYDB, $message);
-            $stmt = $bdd->prepare("SELECT categorie FROM " . self::TABLE_NAME . " WHERE id_categorie ='$id' ");
-            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            $stmt = $bdd->prepare("SELECT categorie FROM " . self::TABLE_NAME . " WHERE id_categorie = :id_categorie ");
+            $stmt->bindValue(':id_categorie', $id);
             if ($stmt->execute()){
                 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Categorie\Categorie');
                 $result = $stmt->fetch();

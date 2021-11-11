@@ -1,5 +1,5 @@
 <?php
-    const MYHOST = '192.168.128.13';
+    const MYHOST = '';
     const MYUSER = '';
     const MYPASS = '';
     const MYDB = '';

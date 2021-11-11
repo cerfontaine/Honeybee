@@ -191,8 +191,8 @@ class MembreRepository
         $bdd = null;
         try {
             $bdd = DBLink::connect2db(MYDB, $message);
-            $stmt = $bdd->prepare("SELECT login FROM " . self::TABLE_NAME . " WHERE id_membre ='$id'");
-            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            $stmt = $bdd->prepare("SELECT login FROM " . self::TABLE_NAME . " WHERE id_membre = :id_membre");
+            $stmt->bindValue(':id_membre', $id);
             if ($stmt->execute()){
                 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Membre\Membre');
                 $result = $stmt->fetch();
@@ -214,8 +214,8 @@ class MembreRepository
         $bdd = null;
         try {
             $bdd = DBLink::connect2db(MYDB, $message);
-            $stmt = $bdd->prepare("SELECT avatar FROM " . self::TABLE_NAME . " WHERE id_membre ='$id'");
-            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            $stmt = $bdd->prepare("SELECT avatar FROM " . self::TABLE_NAME . " WHERE id_membre = :id_membre");
+            $stmt->bindValue(':id_membre', $id);
             if ($stmt->execute()){
                 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Membre\Membre');
                 $result = $stmt->fetch();
@@ -415,8 +415,8 @@ class MembreRepository
         $bdd = null;
         try {
             $bdd = DBLink::connect2db(MYDB, $message);
-            $stmt = $bdd->prepare("SELECT COUNT(id_projet) AS compteur FROM collector_projet WHERE id_membre='$id'");
-            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            $stmt = $bdd->prepare("SELECT COUNT(id_projet) AS compteur FROM collector_projet WHERE id_membre= :id_membre");
+            $stmt->bindValue(':id_membre', $id);
             if ($stmt->execute()){
                 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Membre\Membre');
                 $result = $stmt->fetch();
@@ -438,8 +438,8 @@ class MembreRepository
         $bdd = null;
         try {
             $bdd = DBLink::connect2db(MYDB, $message);
-            $stmt = $bdd->prepare("SELECT COUNT(id_participation) AS compteur FROM collector_participation WHERE id_membre='$id'");
-            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            $stmt = $bdd->prepare("SELECT COUNT(id_participation) AS compteur FROM collector_participation WHERE id_membre= :id_membre");
+            $stmt->bindValue(':id_membre', $id);
             if ($stmt->execute()){
                 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Membre\Membre');
                 $result = $stmt->fetch();
