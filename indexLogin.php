@@ -14,7 +14,7 @@ if (isset($_POST['connexion']) && isNotEmpty($_POST, $message)){
     if($membreRepository->checklogin(htmlentities($_POST['pseudo']), htmlentities($_POST['mdp']), $message)) {
         $membreInfo = new MembreRepository();
 
-        $membreInfo = $membreRepository->getSMTG('login', $_POST['pseudo'], $message = '');
+        $membreInfo = $membreRepository->getSMTG('login', $_POST['pseudo'], $message);
         $id_membre = $membreInfo->id_membre;
         $isAdmin = $membreInfo->est_admin;
 
