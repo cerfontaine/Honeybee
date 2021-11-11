@@ -34,10 +34,11 @@ if(isset($_POST['register'])){
             $membre->avatar = $nom_fichier;
             $membre->carte_VISA = htmlentities($_POST['visa']);
 
+            $membreRepository->storeMembre($membre, $message);
 
-            if ($membreRepository->storeMembre($membre, $message)) {
-                envoyerMailActivation($_POST['mail'], $_POST['nom']);
-            }
+//            if ($membreRepository->storeMembre($membre, $message)) {
+//                 envoyerMailActivation($_POST['mail'], $_POST['nom']);
+//            }
         }
     }
 }
