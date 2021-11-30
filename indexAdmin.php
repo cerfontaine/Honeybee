@@ -22,6 +22,9 @@ if($_SESSION['est_admin']!=1){
 if(isset($_POST['validate'])){
     $projetRepository->updateValidation($_POST['id_projet'], $_POST['validate'], $message);
 }
+if(isset($_POST['enadis'])){
+    $membreRepository->updateAccountStatus($_POST['id_member'], $_POST['enadis'], $message);
+}
 if(isset($_POST['deleteCat'])){
     $categorieRepository->deleteCategorie($_POST['categorieToDelete'], $message);
 }
@@ -31,8 +34,9 @@ if(isset($_POST['AddCat'])){
 ?>
 <?php include('inc/head.er.inc.php')?>
 <body>
+<?php include('inc/bee.inc.php');?>
     <header>
-            <h2><a href="index.php">COLLECT'OR</a></h2>
+            <h2><a href="index.php">You've got to <span class="bee">bee</span> kidding me</a></h2>
             <section id="cologin">
                 <div class="navlogin  profilehead">
                     <?php include('inc/connexionHead.inc.php')?>
@@ -41,6 +45,7 @@ if(isset($_POST['AddCat'])){
         </header>
         <?php include('inc/nav.inc.php') ?>
     <main>
+        <?php echo $message; ?>
         <nav class="navprojet navprofile">
             <form class="projet" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
                 <ul>
@@ -57,7 +62,7 @@ if(isset($_POST['AddCat'])){
             </form>
         </nav>
         <!-- Projet à valider -->
-        <?php if(!isset($_POST['categorie']) AND !isset($_POST['usersearch']) AND !isset($_POST['deleteCat']) and !isset($_POST['AddCat']) and !isset($_POST['searchmember'])) {?>
+        <?php if(!isset($_POST['categorie']) AND !isset($_POST['usersearch']) AND !isset($_POST['deleteCat']) and !isset($_POST['AddCat']) and !isset($_POST['searchmember']) and !isset($_POST['enadis'])) {?>
             <h1>Projets à valider</h1>
             <section class="projetColec">
                 <?php
@@ -70,33 +75,30 @@ if(isset($_POST['AddCat'])){
         <?php }?>
         <!-- Gestion des catégories -->
         <?php if(isset($_POST['categorie']) OR isset($_POST['deleteCat']) or isset($_POST['AddCat'])) {?>
-            <h1>Gestion des catégories</h1>
-            <section class="modif">
-                <form class="modif" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                    <label class="title"><i class="fas fa-plus"></i>Ajouter une catégorie</label><input type="text" name="nameCat" required>
-                    <input type="submit" value="Ajouter" name="AddCat">
-                </form>
-            </section>
-            <?php
-            $categorie = $categorieRepository->getDeletableCategorie($message);
-            ?>
-            <section class="modif">
-                <form class="modif" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                    <label class="title"><i class="fas fa-minus"></i>Supprimer une catégorie</label><select id="categorie" name="categorieToDelete" required>
-                        <option value selected>-----</option>
-                        <?php
-                        foreach($categorie as $listCat) {
-                            ?>
-                            <option value="<?php echo $listCat->id_categorie;?>"><?php echo $listCat->categorie;?></option>
-                        <?php } ?>
-                    </select>
-                    <input type="submit" value="Supprimer" name="deleteCat">
-                </form>
+            <h1>Current log-in users</h1>
+            <section class="searchresult">
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="2">Username | Lastseen</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $loginu = $membreRepository->getAllCurrentLog($message);
+                    foreach($loginu as $loginp){?>
+                        <tr>
+                            <td><?php echo $loginp->login; ?></td>
+                            <td><?php echo $loginp->last_seen; ?></td>
+                        </tr>
+                    <?php }?>
+                    </tbody>
+                </table>
             </section>
         <?php }?>
         <!-- Recherche utilisateur -->
-        <?php if(isset($_POST['usersearch']) or isset($_POST['searchmember'])) {?>
-            <h1>Recherche utilisateur</h1>
+        <?php if(isset($_POST['usersearch']) or isset($_POST['searchmember']) or isset($_POST['enadis'])) {?>
+            <h1>Users research</h1>
             <section class="modif">
                 <form class="modif"  action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded" autocomplete="off">
                     <input name="searchmember" class="modif" type="text" placeholder="Recherche" required/>
@@ -104,7 +106,11 @@ if(isset($_POST['AddCat'])){
                 </form>
             </section>
             <section class="searchresult">
-            <?php include('inc/userSearch.inc.php') ?>
+                <?php if (!isset($_POST['searchmember'])){
+                    include('inc/vignetteUser.php');
+                }else{
+                    include('inc/vignetteUserCheck.inc.php');
+                }?>
             </section>
         <?php } ?>
     </main>

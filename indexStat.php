@@ -14,8 +14,9 @@ $participationRepository = new ParticipationRepository();
 ?>
 <?php include('inc/head.er.inc.php');?>
 <body>
+    <?php include('inc/bee.inc.php');?>
 	<header>
-		<h2><a href="index.php">COLLECT'OR</a></h2>
+		<h2><a href="index.php">You've got to <span class="bee">bee</span> kidding me</a></h2>
         <section id="cologin">
             <h1 class="hidden">Accueil Collect'or</h1>
             <div class="navlogin profilehead">

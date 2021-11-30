@@ -56,7 +56,7 @@ if(isset($_POST['create'])){
 </head>
 <body>
 	<header>		
-		<h2><a href="index.php">COLLECT'OR</a></h2>
+		<h2><a href="index.php">You've got to <span class="bee">bee</span> kidding me</a></h2>
 		<section class="cologin">
 			<div class="navlogin profilehead">
                 <?php include('inc/connexionHead.inc.php')?>

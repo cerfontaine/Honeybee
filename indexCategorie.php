@@ -26,8 +26,9 @@ $title = $listInfo->categorie;
 ?>
 <?php include('inc/head.er.inc.php') ?>
 <body>
+<?php include('inc/bee.inc.php');?>
 <header>
-    <h2><a href="index.php">COLLECT'OR</a></h2>
+    <h2><a href="index.php">You've got to <span class="bee">bee</span> kidding me</a></h2>
     <section id="cologin">
         <div class="navlogin">
             <form class="research"  action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded" autocomplete="off">

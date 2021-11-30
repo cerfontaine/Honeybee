@@ -27,14 +27,16 @@ if (isset($_POST['connexion']) && isNotEmpty($_POST, $message)){
         $_SESSION['username'] = htmlentities($_POST['pseudo']);
         $_SESSION['id']= $id_membre ;
         $_SESSION['est_admin'] = $isAdmin;
+        $membreRepository->updateLoginStatus($id_membre, 1, $message);
         header('location: index.php');
     }
 }
 ?>
 <?php include('inc/head.er.inc.php')?>
 <body>
+    <?php include('inc/bee.inc.php');?>
 	<header>
-		<h2><a href="index.php">COLLECT'OR</a></h2>
+		<h2><a href="index.php">You've got to <span class="bee">bee</span> kidding me</a></h2>
 	</header>
 	<main>
         <?php if (!empty($message)) { echo "<div class='test'><span>$message</span></div>"; } ?>

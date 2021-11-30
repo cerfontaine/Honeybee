@@ -55,8 +55,9 @@ if(isset($_POST['register'])){
     <link rel="icon" href="img/icon.gif">
 </head>
 <body>
+    <?php include('inc/bee.inc.php');?>
 	<header>
-		<h2><a href="index.php">COLLECT'OR</a></h2>
+		<h2><a href="index.php">You've got to <span class="bee">bee</span> kidding me</a></h2>
 	</header>
 	<main>
         <?php

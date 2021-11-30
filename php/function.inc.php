@@ -7,9 +7,22 @@ require_once("db_projet.inc.php");
 require_once("db_commentaire.inc.php");
 require_once("db_participation.inc.php");
 require_once("db_news.inc.php");
+require_once("db_quote.inc.php");
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 const REP_UPLOAD = "uploads/";
 
+$FunctionRepository = new \Membre\MembreRepository();
+$error = "";
+
+if(isset($_SESSION['id'])){
+    try{
+        $FunctionRepository->updateLastSeen($_SESSION['id'], $error);
+    }catch(Exception $e){
+        $error .= "c'est pété";
+    }
+}
 function MailIsValid($email, &$message) {
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
         $message .= "Adresse mail non valide<br>";

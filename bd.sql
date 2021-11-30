@@ -99,7 +99,9 @@ CREATE TABLE `collector_membre` (
   `avatar` text NOT NULL,
   `carte_VISA` varchar(50) NOT NULL,
   `est_desactive` tinyint(1) NOT NULL,
-  `est_admin` tinyint(1) NOT NULL
+  `est_admin` tinyint(1) NOT NULL,
+  `last_seen` date,
+  `login_status` tinyint(1)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

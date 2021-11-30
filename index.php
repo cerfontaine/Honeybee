@@ -6,15 +6,21 @@ use Projet\ProjetRepository as ProjetRepository;
 use Categorie\CategorieRepository as CategorieRepository;
 use Membre\MembreRepository as MembreRepository;
 use Participation\ParticipationRepository as ParticipationRepository;
+use Quote\Quote as Quote;
+use Quote\QuoteRepository as QuoteRepository;
 
 $categorieRepository = new CategorieRepository();
 $projetRepository = new ProjetRepository();
 $membreRepository = new MembreRepository();
 $participationRepository = new ParticipationRepository();
+$quoteRepository = new QuoteRepository();
 $message = '';
 $title = 'Collector';
 
 if (isset($_POST['logout'])){
+    if(isset($_SESSION['id'])){
+        $membreRepository->updateLoginStatus($_SESSION['id'], 0, $message);
+    }
     $_SESSION = array();
     setcookie("PHPSESSID", "", time()-3600, "/");
     session_destroy();
@@ -22,8 +28,9 @@ if (isset($_POST['logout'])){
 ?>
 <?php include('inc/head.er.inc.php')?>
 <body>
-	<header>
-		<h2><a href="index.php">COLLECT'OR</a></h2>
+<?php include('inc/bee.inc.php');?>
+    <header>
+        <h2><a href="index.php">You've got to <span class="bee">bee</span> kidding me</a></h2>
 		<section id="cologin">
 			<h1 class="hidden">Accueil Collect'or</h1>
 			<div class="navlogin">
@@ -34,6 +41,13 @@ if (isset($_POST['logout'])){
                 <?php include('inc/connexionHead.inc.php')?>
 			</div>
 		</section>
+        <section class="beequote">
+            <?php
+            $randquote = $quoteRepository->getARandomQuote($message);
+            foreach($randquote as $quote){?>
+            <span class="beequote"><?php echo $quote->quote; ?></span>
+            <?php }?>
+        </section>
 	</header>
 	<?php include('inc/nav.inc.php') ?>
 	<main>

@@ -30,6 +30,8 @@ class Membre
     private $carte_VISA;
     private $est_desactive;
     private $est_admin;
+    private $last_seen;
+    private $login_status;
 
     public function __get($prop)
     {
@@ -410,7 +412,7 @@ class MembreRepository
         return $result;
     }
 
-    function checkForDelete($id, $message){
+    function checkForDelete($id, &$message){
         $result = null;
         $bdd = null;
         try {
@@ -433,7 +435,7 @@ class MembreRepository
         return $result->compteur;
     }
 
-    function checkForDelete2($id, $message){
+    function checkForDelete2($id, &$message){
         $result = null;
         $bdd = null;
         try {
@@ -456,6 +458,114 @@ class MembreRepository
         return $result->compteur;
     }
 
+    function updateLastSeen($id, &$message){
+        $result = null;
+        $bdd = null;
+        $now = date("Y-m-d H:i:s");
+        try {
+            $bdd = DBLink::connect2db(MYDB, $message);
+            $stmt = $bdd->prepare("UPDATE " . self::TABLE_NAME . " SET last_seen='$now' WHERE id_membre = :id_membre");
+            $stmt->bindValue(':id_membre', $id);
+            if ($stmt->execute()){
+                $message .= "Changement effectué avec succès";
+            } else {
+                $message .= 'Une erreur système est survenue.<br> 
+                    Veuillez essayer à nouveau plus tard ou contactez l\'administrateur du site. 
+                    (Code erreur E: ' . $stmt->errorCode() . ')<br>';
+            }
+            $stmt = null;
+        } catch (Exception $e) {
+            $message .= $e->getMessage() . '<br>';
+        }
+        DBLink::disconnect($bdd);
+        return $result;
+    }
+    function updateLoginStatus($id, $value, &$message){
+        $result = null;
+        $bdd = null;
+        try {
+            $bdd = DBLink::connect2db(MYDB, $message);
+            $stmt = $bdd->prepare("UPDATE " . self::TABLE_NAME . " SET login_status=:login_status WHERE id_membre = :id_membre");
+            $stmt->bindValue(':id_membre', $id);
+            $stmt->bindValue(':login_status', $value);
+            if ($stmt->execute()){
+                $message .= "Changement effectué avec succès";
+            } else {
+                $message .= 'Une erreur système est survenue.<br> 
+                    Veuillez essayer à nouveau plus tard ou contactez l\'administrateur du site. 
+                    (Code erreur E: ' . $stmt->errorCode() . ')<br>';
+            }
+            $stmt = null;
+        } catch (Exception $e) {
+            $message .= $e->getMessage() . '<br>';
+        }
+        DBLink::disconnect($bdd);
+        return $result;
+    }
+    public function updateAccountStatus($id, $value, &$message)
+    {
+        $result = array();
+        $bdd = null;
+        try {
+            $bdd = DBLink::connect2db(MYDB, $message);
+            //version "objet", l'appel au constructeur de la classe peut être forcé avant d'affecter les propriétés en spécifiant les styles PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE.
+            $stmt = $bdd->prepare("UPDATE " . self::TABLE_NAME . " SET est_desactive = :est_desactive WHERE id_membre = :id_membre");
+            $stmt->bindValue(':id_membre', $id);
+            $stmt->bindValue(':est_desactive', $value);
+
+            if ($stmt->execute()){
+                if($value == 0){
+                    $message .= "Account enabled.";
+                }else{
+                    $message .= "Account disabled.";
+                }
+
+            } else {
+                $message .= 'Une erreur système est survenue.<br> 
+                    Veuillez essayer à nouveau plus tard ou contactez l\'administrateur du site. 
+                    (Code erreur E: ' . $stmt->errorCode() . ')<br>';
+            }
+            $stmt = null;
+        } catch (Exception $e) {
+            $message .= $e->getMessage() . '<br>';
+        }
+        DBLink::disconnect($bdd);
+        return $result;
+    }
+    public function getAllCurrentLog(&$message)
+    {
+        $result = array();
+        $bdd = null;
+        $now = date("Y-m-d H:i:s");
+        $currentDate = strtotime($now);
+        $futureDate = $currentDate-(60*10);
+        $formatDate = date("Y-m-d H:i:s", $futureDate);
+        try {
+            $bdd = DBLink::connect2db(MYDB, $message);
+            //version "objet", l'appel au constructeur de la classe peut être forcé avant d'affecter les propriétés en spécifiant les styles PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE.
+            $result = $bdd->query("SELECT * FROM " . self::TABLE_NAME . " WHERE last_seen > '$formatDate' AND login_status = 1", PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Membre\Membre");
+
+        } catch (Exception $e) {
+            $message .= $e->getMessage() . '<br>';
+        }
+        DBLink::disconnect($bdd);
+        return $result;
+    }
+    public function getAllUsers(&$message)
+    {
+        $result = array();
+        $bdd = null;
+        try {
+            $bdd = DBLink::connect2db(MYDB, $message);
+            //version "objet", l'appel au constructeur de la classe peut être forcé avant d'affecter les propriétés en spécifiant les styles PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE.
+            $result = $bdd->query("SELECT * FROM " . self::TABLE_NAME, PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Membre\Membre");
+
+        } catch (Exception $e) {
+            $message .= $e->getMessage() . '<br>';
+        }
+        DBLink::disconnect($bdd);
+        return $result;
+    }
 }
 
 
