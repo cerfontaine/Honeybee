@@ -50,20 +50,20 @@ if(isset($_POST['AddCat'])){
             <form class="projet" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
                 <ul>
                     <li>
-                        <button class="projet" name="validation"><i class="fas fa-check"></i> Projet à valider</button>
+                        <button class="projet" name="validation"><i class="fas fa-check"></i> Project to be validated</button>
                     </li>
                     <li>
-                        <button class="projet" name="categorie"><i class="fas fa-bars"></i> Gestion des catégories</button>
+                        <button class="projet" name="categorie"><i class="fas fa-bars"></i> Current log-in users</button>
                     </li>
                     <li>
-                        <button class="projet" name="usersearch"><i class="fas fa-user-tie"></i> Recherche utilisateur</button>
+                        <button class="projet" name="usersearch"><i class="fas fa-user-tie"></i> Users management</button>
                     </li>
                 </ul>
             </form>
         </nav>
         <!-- Projet à valider -->
         <?php if(!isset($_POST['categorie']) AND !isset($_POST['usersearch']) AND !isset($_POST['deleteCat']) and !isset($_POST['AddCat']) and !isset($_POST['searchmember']) and !isset($_POST['enadis'])) {?>
-            <h1>Projets à valider</h1>
+            <h1>Project to validate</h1>
             <section class="projetColec">
                 <?php
                 $listProjet = $projetRepository->getProjetToValidate($message);
@@ -80,7 +80,8 @@ if(isset($_POST['AddCat'])){
                 <table>
                     <thead>
                     <tr>
-                        <th colspan="2">Username | Lastseen</th>
+                        <th colspan="1">Username</th>
+                        <th colspan="1">Lastseen</th>
                     </tr>
                     </thead>
                     <tbody>

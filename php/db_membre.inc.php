@@ -543,7 +543,7 @@ class MembreRepository
         try {
             $bdd = DBLink::connect2db(MYDB, $message);
             //version "objet", l'appel au constructeur de la classe peut être forcé avant d'affecter les propriétés en spécifiant les styles PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE.
-            $result = $bdd->query("SELECT * FROM " . self::TABLE_NAME . " WHERE last_seen > '$formatDate' AND login_status = 1", PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Membre\Membre");
+            $result = $bdd->query("SELECT * FROM " . self::TABLE_NAME . " WHERE last_seen > '$formatDate' and login_status = 1", PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Membre\Membre");
 
         } catch (Exception $e) {
             $message .= $e->getMessage() . '<br>';

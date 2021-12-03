@@ -8,6 +8,7 @@ require_once("db_commentaire.inc.php");
 require_once("db_participation.inc.php");
 require_once("db_news.inc.php");
 require_once("db_quote.inc.php");
+require_once("db_team.inc.php");
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

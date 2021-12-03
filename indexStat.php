@@ -11,6 +11,8 @@ $message='';
 $categorieRepository = new CategorieRepository();
 $projetRepository = new ProjetRepository();
 $participationRepository = new ParticipationRepository();
+
+
 ?>
 <?php include('inc/head.er.inc.php');?>
 <body>
@@ -25,57 +27,38 @@ $participationRepository = new ParticipationRepository();
         </section>
     </header>
     <?php include('inc/nav.inc.php') ?>
-    <?php $allCategorie = $categorieRepository->getStatCategorie($message); ?>
 	<main>
-        <?php
-        $longueur = sizeof($allCategorie);
-        ?>
-		<h1 class="space">Statistiques</h1>
-        <article class="stat">
-            <section class="graph">
-                <span class="json">
-            {"type":"bar"
-            ,"width":400
-            ,"height":400
-            ,"datasets":
-                [{
-                    "label": "Nombre de projet(s)",
-                    "data": [<?php for($i=0; $i<$longueur; $i++) {
-                        if ($i == $longueur - 1) {
-                            echo $allCategorie[$i]['compteur'];
-                        } else {
-                            echo $allCategorie[$i]['compteur'] . ",";
-                        }
-                    }?>]
-                }],
-            "dataLabel": [<?php for($i=0; $i<$longueur; $i++) {
-                        if ($i == $longueur - 1) {
-                            echo "\"" . $allCategorie[$i]['categorie'] . "\"";
-                        } else {
-                            echo "\"" . $allCategorie[$i]['categorie'] . "\"" . ",";
-                        }
-                    }?>]
-            }
-        </span>
-                <div class="graph"></div>
-            </section>
+        <article class="stat" style="flex-direction:column;">
+            <h2>Looking for an old project ?</h2>
+            <form class="research"  action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded" autocomplete="off">
+                <input name="searchbar" class="champ" type="text" placeholder="Recherche"/>
+                <button name="subsearch" class="champ" type="submit" id="boutoncache"><i class="fas fa-search"></i></button>
+            </form>
+            <h3>Search result :</h3>
+            <?php
+            $pattern = "/DROP TABLE/i";
+            if(isset($_POST['searchbar']) and preg_match($pattern, $_POST['searchbar']) != 1){
+                $servername = 'localhost';
+                $username = 'root';
+                $password = 'sexydorian';
+                $dbname = 'honeybee';
 
-            <section class="graph">
-                <span class="json">
-            {"type":"bar"
-            ,"width":400
-            ,"height":400
-            ,"datasets":
-                [{
-                    "label": "Montant en €",
-                    "data": [<?php echo $participationRepository->getStatParticipation($message)?>]
-                }],
-            "dataLabel": ["Montant total récolté"]
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+                $result = $conn->query("SELECT * FROM collector_challenge UNION SELECT * FROM collector_challenge WHERE title = '{$_POST['searchbar']}'");
+                if($result){
+                    while($row = $result->fetch_array()){
+                        echo"<span>id: ". $row[0]. " - ". $row[1]. " - " .$row[2] . "</span><br>";
+                    }
+                }else{
+                    echo "<span>0 results </span>";
+                }
             }
-        </span>
-                <div class="graph"></div>
-            </section>
-            <span>Collect'or c'est :<br><br>- <?php echo $projetRepository->getStatProjet($message);?> projets.<br>- <?php echo $projetRepository->getStatProjetFinance($message);?> projets financés avec succès.<br>- Une communauté très active<br>- Probablement le meilleur moyen pour vous de financer votre projet !</span>
+            if(preg_match($pattern, $_POST['searchbar']) == 1){
+                echo"<span>Permission denied silly boy.</span>";
+            }?>
         </article>
     </main>
     <?php include('inc/footer.inc.php')?>

@@ -1,3 +1,3 @@
 <footer>
-    <span>Collect'or | 2019 | Tous droits réservés | <a href="indexContact.php">Contact</a> | <a href="indexStat.php">Statistiques</a></span>
+    <span>Collect'or | 2019 | All right reserved | <a href="indexContact.php">Our Team</a> | <a href="indexStat.php">Project's records</a></span>
 </footer>

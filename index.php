@@ -54,7 +54,7 @@ if (isset($_POST['logout'])){
         <?php
         if(!isset($_POST['searchbar'])){
         ?>
-		<h3>Derniers Projets</h3>
+		<h3>Latest Projects</h3>
 		<section class="projetColec">
             <?php
             $listProjet = $projetRepository->getAllProject($message);
@@ -63,7 +63,7 @@ if (isset($_POST['logout'])){
            <?php include('inc/vignetteProjet.inc.php')?>
             <?php } ?>
 		</section>
-        <h3>Projets bientôt financés</h3>
+        <h3>Projects to be funded soon</h3>
         <section class="projetColec">
             <?php
             $listProjet = $projetRepository->getAllProjectFin($message);

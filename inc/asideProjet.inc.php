@@ -2,7 +2,7 @@
     <section class="chiffresec">
         <article class="chiffres">
             <span class="montantreco">22 458€</span>
-            <span class="montanttotal">récoltés sur 30 000€</span>
+            <span class="montanttotal">raised out of 30 000€</span>
         </article>
     </section>
     <section class="echeanceprojet">

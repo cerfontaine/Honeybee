@@ -1,5 +1,9 @@
 <?php
 require('php/function.inc.php');
+use Team\Team as Team;
+use Team\TeamRepository as TeamRepository;
+
+$teamRepo = new TeamRepository();
 $message = '';
 $title='Contact';
 if(isset($_POST['contacter'])){
@@ -17,16 +21,23 @@ if(isset($_POST['contacter'])){
 		<h2><a href="index.php">You've got to <span class="bee">bee</span> kidding me</a></h2>
 	</header>
 	<main>
-        <?php echo $message; ?>
-		<fieldset class="login">
-			<h1>Contact</h1>
-            <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-				 <input id="sujet" name="sujet" type="text" placeholder="Sujet" required autofocus>
-				 <textarea id="message" name="message" placeholder="Votre message" required rows="3" cols="20"></textarea>
-				 <input id="mail" name="reponsemail" type="email" placeholder="E-mail" required>
-				 <input type="submit" name="contacter" value="Contacter">
-			</form>
-		</fieldset>
+        <section class="searchresult">
+            <h2 style="width:100%;">Our Team</h2>
+            <?php $team =$teamRepo->getAllInfo($message);
+            foreach($team as $member){?>
+                <article class="projet_accueil">
+                    <img src="img/bee.gif" alt="Photo du projet" class="image_projet"/>
+                    <h4><?php echo $member->name;?></h4>
+                    <div class="desc">
+                        <span><?php echo $member->title;?></span>
+                    </div>
+                    <div class="desc">
+                        <span>Buzz</span>
+                    </div>
+                    <span class="echeance">Bumble bee power</span>
+                </article>
+            <?php }?>
+        </section>
 	</main>
     <?php include('inc/footer.inc.php')?>
 </body>

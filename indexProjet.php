@@ -116,7 +116,7 @@ if(isset($_POST['confirmDelete'])){
                     <article class="mainprojet">
                         <img src="uploads/<?php echo $listInfo->illustration_apercu; ?>" alt="Photo du projet" class="projetimg"/>
                         <div class="divdesc">
-                            <label class="projetdesclab">Description du projet</label>
+                            <label class="projetdesclab">Project description</label>
                             <span class="spancategorie"><i class="fas fa-tag"></i> <?php echo $categorieRepository->getCategorie($listInfo->id_categorie, $message) ?></span>
                         </div>
                         <span class="descriptionprojet"><?php echo $listInfo->description; ?></span>
@@ -128,12 +128,12 @@ if(isset($_POST['confirmDelete'])){
                         <!-- Success -->
                         <?php if(isset($succes)) {?>
                             <article class="success">
-                                <span><i class="fas fa-check"></i> Votre commentaire a été supprimé avec succès ! Vous allez être redirigé... </span>
+                                <span><i class="fas fa-check"></i> Your comment has been successfully deleted! You will be redirected... </span>
                                 <meta http-equiv="refresh" content="2">
                             </article>
                         <?php }else{ ?>
                     <article class="mainprojet">
-                        <h3 class="projeth">Commentaires</h3>
+                        <h3 class="projeth">Comments</h3>
                     </article>
                     <article class="comment">
                         <ul>
@@ -146,15 +146,15 @@ if(isset($_POST['confirmDelete'])){
                                             <span><?php echo $commentlist->date_modification?></span>
                                             <?php if(isset($_SESSION['id']) and $commentlist->id_membre == $_SESSION['id']) {?>
                                             <form class="deletecom" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                                                <button class="projet" name="deleteCom" value="Supprimer le commentaire"><i class="fas fa-trash"></i></button>
+                                                <button class="projet" name="deleteCom" value="Delete comment"><i class="fas fa-trash"></i></button>
                                                 <input type="hidden" name="id_comment" value="<?php echo $commentlist->id_comment?>">
                                             </form>
                                                 <?php if(isset($_POST['deleteCom']) AND $_POST['id_comment'] == $commentlist->id_comment ) {?>
                                                     <form class="deletecom" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                                                        <label class="labelcom">Confirmer ? </label>
+                                                        <label class="labelcom">Confirm ? </label>
                                                         <input type="hidden" name="id_comment_verif" value="<?php echo $commentlist->id_comment?>">
-                                                        <button class="projet" name="confirm" value="Confirmer"><i class="fas fa-check"></i></button>
-                                                        <button class="projet red" name="refuse" value="Refuser"><i class="fas fa-times"></i></button>
+                                                        <button class="projet" name="confirm" value="Confirm"><i class="fas fa-check"></i></button>
+                                                        <button class="projet red" name="refuse" value="Deny"><i class="fas fa-times"></i></button>
                                                     </form>
                                                 <?php } ?>
                                             <?php } ?>
@@ -168,7 +168,7 @@ if(isset($_POST['confirmDelete'])){
                                     <div class="commentdiv">
                                         <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
                                             <textarea name="comment"></textarea>
-                                            <input type="submit" name="commenter" value="Commenter">
+                                            <input type="submit" name="commenter" value="Comment">
                                         </form>
                                     </div>
                                 </li>
@@ -183,17 +183,17 @@ if(isset($_POST['confirmDelete'])){
                     <?php if(isset($_POST['modifierProjet']) or isset($_POST['change'])){?>
                         <?php if(isset($succes)) {?>
                             <article class="success">
-                                <span><i class="fas fa-check"></i> Description modifiée avec succès ! Vous allez être redirigé... </span>
+                                <span><i class="fas fa-check"></i> Description successfully modified! You will be redirected... </span>
                                 <meta http-equiv="refresh" content="2">
                             </article>
                         <?php }else{ ?>
                     <article class="mainprojet">
-                        <h3 class="projeth">Modification Projet</h3>
+                        <h3 class="projeth">Project modification</h3>
                     </article>
                     <section class="modif">
                         <form class="modif" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                            <label class="title">Description du projet</label><input id="description" name="descriptionChange" type="text" value="<?php echo $listInfo->description ?>" required>
-                            <input type="submit" name="change" value="Modifier">
+                            <label class="title">Project description</label><input id="description" name="descriptionChange" type="text" value="<?php echo $listInfo->description ?>" required>
+                            <input type="submit" name="change" value="Modify">
                         </form>
                     </section>
                         <?php } ?>
@@ -203,16 +203,16 @@ if(isset($_POST['confirmDelete'])){
                     <?php if(isset($_POST['deleteProjet']) OR isset($_POST['confirmDelete'])) { ?>
                         <?php if(isset($succes)) {?>
                             <article class="success">
-                                <span><i class="fas fa-check"></i> Projet supprimé avec succès vous allez être redirigé... </span>
+                                <span><i class="fas fa-check"></i> Project successfully deleted you will be redirected... </span>
                                 <meta http-equiv="refresh" content="2;URL=index.php">
                             </article>
                         <?php }else{ ?>
                     <article class="mainprojet">
-                        <h3 class="projeth">Êtes-vous sûr de vouloir supprimer le projet ?</h3>
+                        <h3 class="projeth">Are you sure you want to delete the project?</h3>
                         <div class="modifsup">
                             <form class="modif" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                                <button class="projet" type="submit" name="confirmDelete"><i class="fas fa-check"></i> Confirmer</button>
-                                <button class="projet" type="submit" name="refuseDelete"><i class="fas fa-times"></i> Refuser</button>
+                                <button class="projet" type="submit" name="confirmDelete"><i class="fas fa-check"></i> Confirm</button>
+                                <button class="projet" type="submit" name="refuseDelete"><i class="fas fa-times"></i> Deny</button>
                             </form>
                         </div>
                     </article>
@@ -223,17 +223,17 @@ if(isset($_POST['confirmDelete'])){
                     <?php if(isset($_POST['prolongerProjet']) OR isset($_POST['prolongation'])){?>
                         <?php if(isset($succes)) {?>
                             <article class="success">
-                                <span><i class="fas fa-check"></i> Votre projet a été prolongé avec succès! Vous allez être redirigé... </span>
+                                <span><i class="fas fa-check"></i> Your project has been successfully extended! You will be redirected... </span>
                                 <meta http-equiv="refresh" content="2">
                             </article>
                         <?php }else{ ?>
                     <article class="mainprojet">
-                        <h3 class="projeth">Prolongation projet</h3>
+                        <h3 class="projeth">Project extension</h3>
                     </article>
                     <section class="modif">
                         <form class="modif" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                            <label class="title">Échéance</label><input type="date" id="echeance" name="echeanceChange" min="<?php echo date('Y-m-d'); ?>" required>
-                            <input type="submit" name="prolongation" value="Prolonger">
+                            <label class="title">Deadline</label><input type="date" id="echeance" name="echeanceChange" min="<?php echo date('Y-m-d'); ?>" required>
+                            <input type="submit" name="prolongation" value="Extend">
                         </form>
                     </section>
                             <?php } ?>
@@ -244,7 +244,7 @@ if(isset($_POST['confirmDelete'])){
                         <!--succes -->
                     <?php if(isset($succes)) {?>
                         <article class="success">
-                            <span><i class="fas fa-check"></i> Votre news a été supprimé avec succès ! Vous allez être redirigé... </span>
+                            <span><i class="fas fa-check"></i> Your news has been successfully deleted! You will be redirected... </span>
                             <meta http-equiv="refresh" content="2">
                         </article>
                     <?php }else{ ?>
@@ -263,21 +263,21 @@ if(isset($_POST['confirmDelete'])){
                                         <header class="pseudoCom"><span><?php echo $news->intitule?></span></header>
                                         <p class="commentaire"><?php echo $news->description?></p>
                                         <?php if($news->url != '') {?>
-                                        <a href="uploads/<?php echo $news->url?>" download><i class="fas fa-download"></i>Pièce jointe de la news</a>
+                                        <a href="uploads/<?php echo $news->url?>" download><i class="fas fa-download"></i>News attachment</a>
                                         <?php }?>
                                         <footer class="dateCom">
                                             <span><?php echo $news->date_publication?></span>
                                             <?php if(isset($_SESSION['id']) and $membreInfo->id_membre == $_SESSION['id']) {?>
                                                 <form class="deletecom" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                                                    <button class="projet" name="deleteNews" value="Supprimer la News"><i class="fas fa-trash"></i></button>
+                                                    <button class="projet" name="deleteNews" value="Delete the news"><i class="fas fa-trash"></i></button>
                                                     <input type="hidden" name="id_news" value="<?php echo $news->id_news?>">
                                                 </form>
                                                 <?php if(isset($_POST['deleteNews']) and $_POST['id_news'] == $news->id_news) {?>
                                                     <form class="deletecom" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                                                        <label class="labelcom">Confirmer ? </label>
+                                                        <label class="labelcom">Confirm ? </label>
                                                         <input type="hidden" name="id_news_verif" value="<?php echo $news->id_news?>">
-                                                        <button class="projet" name="confirmn" value="Confirmer"><i class="fas fa-check"></i></button>
-                                                        <button class="projet red" name="refusen" value="Refuser"><i class="fas fa-times"></i></button>
+                                                        <button class="projet" name="confirmn" value="Confirm"><i class="fas fa-check"></i></button>
+                                                        <button class="projet red" name="refusen" value="Deny"><i class="fas fa-times"></i></button>
                                                     </form>
                                                 <?php } ?>
                                             <?php } ?>
@@ -289,10 +289,10 @@ if(isset($_POST['confirmDelete'])){
                                 <li class="commentli">
                                     <div class="commentdiv">
                                         <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="multipart/form-data">
-                                            <label class="title">Intitulé</label><textarea name="intitule" required></textarea>
+                                            <label class="title">Title</label><textarea name="intitule" required></textarea>
                                             <label class="title">Description</label><textarea name="description" required></textarea>
-                                            <label class="title">Fichier (non requis)</label><input type="file" id="fichier" name="fichier" accept=".png, .jpeg, .jpg, .gif, .pdf">
-                                            <input type="submit" name="newser" value="Publier">
+                                            <label class="title">File (not required)</label><input type="file" id="fichier" name="fichier" accept=".png, .jpeg, .jpg, .gif, .pdf">
+                                            <input type="submit" name="newser" value="Post">
                                         </form>
                                     </div>
                                 </li>
@@ -317,41 +317,41 @@ if(isset($_POST['confirmDelete'])){
                                     echo $participationRepository->getAllParticipationForP($_GET['id_projet'], $message);
                                 }
                                     ?>€</span>
-                            <span class="montanttotal">récoltés sur <?php echo $listInfo->montant?> €</span>
+                            <span class="montanttotal">raised out of <?php echo $listInfo->montant?> €</span>
                         </article>
                     </section>
                     <section class="echeanceprojet">
-                        <span class="echeancespan">Clôture le <?php echo $listInfo->date_echeance?></span>
+                        <span class="echeancespan">Closes on <?php echo $listInfo->date_echeance?></span>
                     </section>
                     <section class="whopropose">
                         <img src="uploads/<?php echo $membreInfo->avatar; ?>" alt="Photo de profil" class="createurprofile">
                         <span class="createur"><?php echo $membreInfo->login ?></span>
                     </section>
                     <section class="whosupport">
-                        <label class="contributeur">Contributeurs</label>
+                        <label class="contributeur">Contributors</label>
                         <span class="montantreco"><?php echo $participationRepository->getAllParticipantForP($_GET['id_projet'], $message)?> <i class="fas fa-users"></i></span>
                     </section>
                     <?php if(isset($_SESSION['username']) and $listInfo->taux_participation<100) {?>
                         <?php if($participationRepository->siParticipation($_GET['id_projet'], $_SESSION['id'], $message) == 0){ ?>
                             <section class="support">
-                                <a href="indexSoutenir.php?id_projet=<?php echo $_GET['id_projet']?>" class="liensoutien lienprofil">Soutenir ce projet</a>
+                                <a href="indexSoutenir.php?id_projet=<?php echo $_GET['id_projet']?>" class="liensoutien lienprofil">Support this project</a>
                             </section>
                         <?php }?>
                         <?php if($participationRepository->siParticipation($_GET['id_projet'], $_SESSION['id'], $message) == 1){ ?>
                             <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                                <button class="liensoutien lienprofil" name="deleteParticipation" type="submit">Supprimer la participation</button>
+                                <button class="liensoutien lienprofil" name="deleteParticipation" type="submit">Delete the support</button>
                             </form>
                         <?php }?>
                         <?php if($_SESSION['id'] == $listInfo->id_membre) { ?>
                             <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                                <button class="liensoutien lienprofil" name="modifierProjet" type="submit"><i class="fas fa-edit"></i>Modifier mon projet</button>
+                                <button class="liensoutien lienprofil" name="modifierProjet" type="submit"><i class="fas fa-edit"></i>Modify my project</button>
                             </form>
                             <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                                <button class="liensoutien lienprofil" name="deleteProjet" type="submit"><i class="fas fa-trash"></i>Supprimer mon projet</button>
+                                <button class="liensoutien lienprofil" name="deleteProjet" type="submit"><i class="fas fa-trash"></i>Delete my project</button>
                             </form>
                             <?php if($listInfo->est_prolonge == 0) {?>
                             <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
-                                <button class="liensoutien lienprofil" name="prolongerProjet" type="submit"><i class="far fa-clock"></i>Prolonger mon projet</button>
+                                <button class="liensoutien lienprofil" name="prolongerProjet" type="submit"><i class="far fa-clock"></i>Extend my project</button>
                             </form>
                             <?php } ?>
                         <?php } ?>

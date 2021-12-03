@@ -1,7 +1,7 @@
 <?php
 if(isset($_POST['searchbar'])){
     $search = htmlentities($_POST['searchbar']);?>
-    <h3>Résultat de la recherche pour "<?php echo $search?>"</h3>
+    <h3>Search result for <?php echo $_POST['searchbar'];?></h3>
 		<section class="projetColec">
             <?php
             $listProjet = $projetRepository->projectResearch($search, $message);

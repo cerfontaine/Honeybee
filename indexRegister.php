@@ -6,15 +6,20 @@ use Membre\Membre as Membre;
 $membreRepository = new MembreRepository();
 $nom_fichier='';
 $message='';
-
+$tel = "067845956256";
+$rue = "Rue de la loi";
+$num = "14";
+$poste= "1000";
+$city = "Brussels";
+$country = "Belgium";
+$visa = "4318868773104749";
 if(isset($_POST['register'])){
     $notEmpty = isNotEmpty($_POST, $message);
     $existIndb = $membreRepository->existsInDb($_POST['pseudo'], $message);
     $equalpass = passwordEqual($_POST['mdp'], $_POST['mdps'], $message);
     $courrielok = MailIsValid($_POST['mail'], $message);
-    $isLuhn = isLunh($_POST['visa'], $message);
 
-    if($notEmpty && $equalpass && $courrielok && $existIndb && $isLuhn){
+    if($notEmpty && $equalpass && $courrielok && $existIndb ){
         $add = addPicture($_FILES['avatar'], $nom_fichier,$message);
 
         if($add) {
@@ -25,14 +30,14 @@ if(isset($_POST['register'])){
             $membre->nom = htmlentities($_POST['nom']);
             $membre->mot_passe = htmlentities($_POST['mdp']);
             $membre->courriel = htmlentities($_POST['mail']);
-            $membre->tel = htmlentities($_POST['téléphone']);
-            $membre->adresse_rue = htmlentities($_POST['rue']);
-            $membre->adresse_num = htmlentities($_POST['numero']);
-            $membre->adresse_code = htmlentities($_POST['code']);
-            $membre->adresse_ville = htmlentities($_POST['ville']);
-            $membre->adresse_pays = htmlentities($_POST['pays']);
+            $membre->tel = "067845956256";
+            $membre->adresse_rue = "Rue de la loi";
+            $membre->adresse_num = "14";
+            $membre->adresse_code = "1000";
+            $membre->adresse_ville = "Brussels";
+            $membre->adresse_pays = "Belgium";
             $membre->avatar = $nom_fichier;
-            $membre->carte_VISA = htmlentities($_POST['visa']);
+            $membre->carte_VISA = "4318868773104749";
 
             $membreRepository->storeMembre($membre, $message);
 
@@ -64,34 +69,21 @@ if(isset($_POST['register'])){
         echo $message;
         ?>
         <fieldset class="register">
-			<h1>Inscription</h1>
+			<h1>Registration</h1>
 			<form autocomplete="off" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="multipart/form-data">
-				<label>INFORMATIONS DE CONNEXION</label>
-				<label class="title">Nom d'utilisateur</label><input id="pseudo" name="pseudo" type="text" value="<?php if (isset($_POST['pseudo'])){echo $_POST['pseudo'];} ?>" required autofocus>
+				<label>Connection informations</label>
+				<label class="title">Username</label><input id="pseudo" name="pseudo" type="text" value="<?php if (isset($_POST['pseudo'])){echo $_POST['pseudo'];} ?>" required autofocus>
 				<label class="title">Email</label><input id="mail" name="mail" type="email" value="<?php if (isset($_POST['mail'])){echo $_POST['mail'];} ?>" required>
-				<label class="title">Mot de passe</label><input id="mdp" name="mdp" type="password" required>
-				<label class="title">Retapez le mot de passe</label><input type="password" id="mdps" name="mdps" required>
+				<label class="title">Password</label><input id="mdp" name="mdp" type="password" required>
+				<label class="title">Confirm the password</label><input type="password" id="mdps" name="mdps" required>
 
 			     
-				<label>INFORMATIONS PERSONNELLES</label>
-				<label class="title">Nom</label><input id="nom" name="nom" type="text" value="<?php if (isset($_POST['nom'])){echo $_POST['nom'];} ?>" required>
-				<label class="title">Prénom</label><input id="prenom" name="prenom" type="text" value="<?php if (isset($_POST['prenom'])){echo $_POST['prenom'];} ?>" required>
-				<label class="title">Votre avatar</label><input type="file" id="avatar" name="avatar" accept=".png, .jpeg, .jpg, .gif" required>
-				<label class="title">Numéro de téléphone</label><input id="téléphone" name="téléphone" type="text" value="<?php if (isset($_POST['téléphone'])){echo $_POST['téléphone'];} ?>" required>
-			
-			
-				<label>INFORMATIONS DE LOCALISATION</label>
-				<label class="title">Rue</label><input id="rue" name="rue" type="text" value="<?php if (isset($_POST['rue'])){echo $_POST['rue'];} ?>" required>
-				<label class="title">N°/Boîte</label><input id="numero" name="numero" type="text" value="<?php if (isset($_POST['numero'])){echo $_POST['numero'];} ?>" required>
-				<label class="title">Code postal</label><input id="code" name="code" type="text" value="<?php if (isset($_POST['code'])){echo $_POST['code'];} ?>" required>
-				<label class="title">Ville</label><input id="ville" name="ville" type="text" value="<?php if (isset($_POST['ville'])){echo $_POST['ville'];} ?>" required>
-				<label class="title">Pays</label><input id="pays" name="pays" type="text"value="<?php if (isset($_POST['pays'])){echo $_POST['pays'];} ?>" required>
-			
-			
-				<label>INFORMATIONS FINANCIERES</label> 
-				<label class="title">Visa</label><input id="visa" name="visa" type="text" value="<?php if (isset($_POST['visa'])){echo $_POST['visa'];} ?>" pattern="^-?\d{16}$" required>
+				<label>Personal informations</label>
+				<label class="title">Last name</label><input id="nom" name="nom" type="text" value="<?php if (isset($_POST['nom'])){echo $_POST['nom'];} ?>" required>
+				<label class="title">First name</label><input id="prenom" name="prenom" type="text" value="<?php if (isset($_POST['prenom'])){echo $_POST['prenom'];} ?>" required>
+				<label class="title">Profile picture</label><input type="file" id="avatar" name="avatar" accept=".png, .jpeg, .jpg, .gif" required>
 				
-				<input type="submit" name="register" value="Créer mon compte">
+				<input type="submit" name="register" value="Create an account">
 			</form>
 		</fieldset>
 	</main>
