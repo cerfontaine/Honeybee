@@ -66,9 +66,11 @@ class MembreRepository
         $password = hash("sha512",$member->mot_passe);
         $est_desac = 0;
         $est_admin = 0;
+        $is_login = 0;
+        $last_seen = date("Y-m-d H:i:s");
         try {
             $bdd  = DBLink::connect2db(MYDB, $message);
-            $stmt = $bdd->prepare("INSERT INTO ".self::TABLE_NAME. "(login, prenom, nom, mot_passe, courriel, tel, adresse_rue, adresse_num, adresse_code, adresse_ville, adresse_pays, avatar, carte_VISA, est_desactive,est_admin) VALUES (:username,:prenom,:nom, :password,:courriel,:tel,:rue,:num,:code,:ville,:pays,:avatar,:visa,:desac,:admin)");
+            $stmt = $bdd->prepare("INSERT INTO ".self::TABLE_NAME. "(login, prenom, nom, mot_passe, courriel, tel, adresse_rue, adresse_num, adresse_code, adresse_ville, adresse_pays, avatar, carte_VISA, est_desactive,est_admin, last_seen, login_status) VALUES (:username,:prenom,:nom, :password,:courriel,:tel,:rue,:num,:code,:ville,:pays,:avatar,:visa,:desac,:admin,:last_seen,:login_status)");
             $stmt->bindValue(':username', $member->login);
             $stmt->bindValue(':prenom', $member->prenom);
             $stmt->bindValue(':nom', $member->nom);
@@ -84,6 +86,8 @@ class MembreRepository
             $stmt->bindValue(':visa', $member->carte_VISA);
             $stmt->bindValue(':admin', $est_admin);
             $stmt->bindValue(':desac', $est_desac);
+            $stmt->bindValue(':last_seen', $last_seen);
+            $stmt->bindValue(':login_status', $is_login);
             if ($stmt->execute() && $stmt->rowCount() > 0){
                 $message .= "Utilisateur $member->login ajouté<br>";
                 $result=True;
