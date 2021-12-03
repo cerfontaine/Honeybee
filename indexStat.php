@@ -56,7 +56,7 @@ $participationRepository = new ParticipationRepository();
                     echo "<span>0 results </span>";
                 }
             }
-            if(preg_match($pattern, $_POST['searchbar']) == 1){
+            if(isset($_POST['searchbar']) and preg_match($pattern, $_POST['searchbar']) == 1){
                 echo"<span>Permission denied silly boy.</span>";
             }?>
         </article>
