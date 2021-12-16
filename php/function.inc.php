@@ -99,12 +99,16 @@ function addPicture($image, &$nomFichier, &$message){
     $nomFichier = uniqid();
 
     $extension = pathinfo($image['name']);
-    $nomFichier = $nomFichier.'.'.$extension['extension'];
-    if(file_exists(REP_UPLOAD . $nomFichier)){
-        $message.= 'Le fichier existe déjà! ';
-    }
-    if(!move_uploaded_file($image['tmp_name'], REP_UPLOAD.$nomFichier)){
-        $message .= 'Une erreur est survenue lors de la copie.';
+    if($extension['extension'] == "png" or $extension['extension'] == "jpeg" or $extension['extension'] == "jpg" or $extension['extension'] == "gif" or $extension['extension'] == "pdf") {
+        $nomFichier = $nomFichier . '.' . $extension['extension'];
+        if (file_exists(REP_UPLOAD . $nomFichier)) {
+            $message .= 'Le fichier existe déjà! ';
+        }
+        if (!move_uploaded_file($image['tmp_name'], REP_UPLOAD . $nomFichier)) {
+            $message .= 'Une erreur est survenue lors de la copie.';
+        }
+    }else{
+        $message .= 'Wrong file extension';
     }
     return (empty($message)) ? True : False;
 }
@@ -131,12 +135,16 @@ function addApercu($image, &$nomFichier, &$message){
     $nomFichier = uniqid();
 
     $extension = pathinfo($image['name']);
-    $nomFichier = $nomFichier.'.'.$extension['extension'];
-    if(file_exists(REP_UPLOAD . $nomFichier)){
-        $message.= 'Le fichier existe déjà! ';
-    }
-    if(!move_uploaded_file($image['tmp_name'], REP_UPLOAD.$nomFichier)){
-        $message .= 'Une erreur est survenue lors de la copie.';
+    if($extension['extension'] == "png" or $extension['extension'] == "jpeg" or $extension['extension'] == "jpg" or $extension['extension'] == "gif" or $extension['extension'] == "pdf") {
+        $nomFichier = $nomFichier . '.' . $extension['extension'];
+        if (file_exists(REP_UPLOAD . $nomFichier)) {
+            $message .= 'Le fichier existe déjà! ';
+        }
+        if (!move_uploaded_file($image['tmp_name'], REP_UPLOAD . $nomFichier)) {
+            $message .= 'Une erreur est survenue lors de la copie.';
+        }
+    }else{
+        $message .= 'Wrong file extension';
     }
     return (empty($message)) ? True : False;
 }
@@ -163,12 +171,16 @@ function addFile($image, &$nomFichier, &$message){
     $nomFichier = uniqid();
 
     $extension = pathinfo($image['name']);
-    $nomFichier = $nomFichier.'.'.$extension['extension'];
-    if(file_exists(REP_UPLOAD . $nomFichier)){
-        $message.= 'Le fichier existe déjà! ';
-    }
-    if(!move_uploaded_file($image['tmp_name'], REP_UPLOAD.$nomFichier)){
-        $message .= 'Une erreur est survenue lors de la copie.';
+    if($extension['extension'] == "png" or $extension['extension'] == "jpeg" or $extension['extension'] == "jpg" or $extension['extension'] == "gif" or $extension['extension'] == "pdf"){
+        $nomFichier = $nomFichier.'.'.$extension['extension'];
+        if(file_exists(REP_UPLOAD . $nomFichier)){
+            $message.= 'Le fichier existe déjà! ';
+        }
+        if(!move_uploaded_file($image['tmp_name'], REP_UPLOAD.$nomFichier)){
+            $message .= 'Une erreur est survenue lors de la copie.';
+        }
+    }else{
+        $message .= 'Wrong file extension';
     }
     return (empty($message)) ? True : False;
 }
