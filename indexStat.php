@@ -47,14 +47,21 @@ $participationRepository = new ParticipationRepository();
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error);
                 }
-                $result = $conn->query("SELECT * FROM collector_challenge UNION SELECT * FROM collector_challenge WHERE title = '{$_POST['searchbar']}'");
-                if($result){
-                    while($row = $result->fetch_array()){
-                        echo"<span>id: ". $row[0]. " - ". $row[1]. " - " .$row[2] . "</span><br>";
+                $query = "SELECT * FROM collector_challenge;";
+                $query .= "SELECT * FROM collector_challenge WHERE title = '{$_POST['searchbar']}'";
+                $result = $conn->multi_query($query);
+                do{
+                    if($result = $conn->store_result()){
+                        while($row = $result->fetch_row()){
+                            echo"<span>id: ". $row[0]. " - ". $row[1]. " - " .$row[2] . "</span><br>";
+                        }
+                    }else{
+                        echo "<span>0 results </span>";
                     }
-                }else{
-                    echo "<span>0 results </span>";
-                }
+                    if ($conn->more_results()) {
+                        printf("-----------------\n");
+                    }
+                }while ($conn->next_result());
             }
             if(isset($_POST['searchbar']) and preg_match($pattern, $_POST['searchbar']) == 1){
                 echo"<span>Permission denied silly boy.</span>";

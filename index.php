@@ -45,7 +45,7 @@ if (isset($_POST['logout'])){
             <?php
             $randquote = $quoteRepository->getARandomQuote($message);
             foreach($randquote as $quote){?>
-            <span class="beequote"><?php echo $quote->quote; ?></span>
+            <span class="beequote"><?php echo $quote->quote; ?> <a href="indexChallenge.php">More info about challenges.</a></span>
             <?php }?>
         </section>
 	</header>
